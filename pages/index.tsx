@@ -1,11 +1,23 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import Script from 'next/script'
+import { useState } from 'react'
+import Builder from '../components/Builder'
+import Options from '../components/Options'
 import styles from '../styles/Home.module.css'
 
 const random = () => Math.floor(Math.random() * 2000)
 
 const Home: NextPage = () => {
+  const [showOptions, setShowOptions] = useState(true)
+  const [showBuilder, setShowBuilder] = useState(false)
+  const [showPlay, setShowPlay] = useState(false)
+
+  const startBuilder = () => {
+    setShowOptions(false)
+    setShowBuilder(true)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -33,26 +45,8 @@ const Home: NextPage = () => {
         <div style={{ width: 120, height: 120, backgroundColor: "#4e4ef3", top: random(), left: random() }} className={styles["random-gradient-circle"]}></div>
         <div style={{ width: 70, height: 70, backgroundColor: "#f54fd4", top: random(), left: random() }} className={styles["random-gradient-circle"]}></div>
         <div style={{ width: 90, height: 90, backgroundColor: "#4e4ef3", top: random(), left: random() }} className={styles["random-gradient-circle"]}></div>
-        <div className={styles["options-grid"]}>
-          <div className={styles.card}>
-            <div className={styles["img-container"]}>
-              <Image width="50" height="50" src="/eth.png" />
-            </div>
-            <h2>Earn <span className={styles["text-gradient"]}>ETH</span> by playing</h2>
-            <p>
-              Players with best score can earn some ETH as a trophy!
-            </p>
-          </div>
-          <div className={styles.card}>
-            <div className={styles["wrench-container"]}>
-              <p style={{fontSize: 50}}>&#128295;</p>
-            </div>
-            <h2>Earn <span className={styles["text-gradient"]}>ETH</span> by building</h2>
-            <p>
-              Be the most feared builder and you will be rewarded!
-            </p>
-          </div>
-        </div>
+        {showOptions && <Options onClickPlayOption={() => null} onClickBuildOption={startBuilder} />}
+        {showBuilder && <Builder />}
       </main>
 
       <footer className={styles.footer}>
@@ -64,6 +58,7 @@ const Home: NextPage = () => {
           🚀 Created by&nbsp;<span className={styles.bold}>Toni Bardina</span>
         </a>
       </footer>
+      <Script src="https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-min-noconflict/ace.js" type="text/javascript"></Script>
     </div>
   )
 }
