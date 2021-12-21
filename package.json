@@ -1,28 +1,31 @@
 {
-  "name": "who_knows",
+  "name": "simon_eth",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:ropsten": "dotenv -e .env.local cross-var hardhat run scripts/deploy.js --network ropsten"
   },
   "dependencies": {
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^4.1.1",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@types/node": "17.0.1",
-    "@types/react": "17.0.37",
-    "eslint": "8.5.0",
-    "eslint-config-next": "12.0.7",
-    "typescript": "4.5.4",
     "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@types/node": "17.0.1",
+    "@types/react": "17.0.37",
     "chai": "^4.3.4",
+    "eslint": "8.5.0",
+    "eslint-config-next": "12.0.7",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.2",
-    "hardhat": "^2.8.0"
+    "hardhat": "^2.8.0",
+    "typescript": "4.5.4"
   }
 }
