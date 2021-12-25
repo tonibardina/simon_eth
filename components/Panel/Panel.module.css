@@ -1,0 +1,37 @@
+.panel {
+    position: absolute;
+    top: 0rem;
+    right: -9rem;
+    margin: 1rem;
+    z-index: 50;
+    padding: .5rem;
+    text-align: left;
+    color: inherit;
+    text-decoration: none; 
+    backdrop-filter: blur(4rem);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.panel ul {
+    padding: 0 .5rem 0 .5rem;
+    cursor: pointer;
+}
+
+.panel li {
+    list-style: none;
+    margin: 0 0 .5rem 0;
+    text-align: center;
+}
+
+.close {
+    background-color: tomato;
+    color: white;
+    border-radius: 5px;
+    padding: .5rem .8rem;
+}
+
+.close:hover {
+    background-color: rgb(223, 61, 32);
+}

@@ -6,15 +6,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy:ropsten": "dotenv -e .env.local cross-var hardhat run scripts/deploy.js --network ropsten"
+    "hardhat:run": "hardhat run scripts/run.js",
+    "hardhat:deploy:ropsten": "hardhat run scripts/deploy.js --network ropsten"
   },
   "dependencies": {
+    "@alch/alchemy-web3": "^1.1.9",
     "@types/react-dom": "^17.0.11",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^4.1.1",
     "next": "12.0.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "web3": "^1.6.1"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.3",
@@ -25,7 +28,6 @@
     "eslint": "8.5.0",
     "eslint-config-next": "12.0.7",
     "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.5.2",
     "hardhat": "^2.8.0",
     "typescript": "4.5.4"
   }

@@ -9,7 +9,7 @@ interface OptionsProps {
 
 const Options = ({onClickBuildOption, onClickPlayOption}: OptionsProps): ReactElement => {
     return (
-        <div className={styles["options-grid"]}>
+        <div className={styles["options"]}>
           <div onClick={onClickPlayOption} className={styles.card}>
             <div className={styles["img-container"]}>
               <Image width="50" height="50" src="/eth.png" />
@@ -25,7 +25,7 @@ const Options = ({onClickBuildOption, onClickPlayOption}: OptionsProps): ReactEl
             </div>
             <h2>Earn <span className={styles["text-gradient"]}>ETH</span> by building</h2>
             <p>
-              Be the most feared builder and you will be rewarded!
+              Be the most loved builder and you will be rewarded!
             </p>
           </div>
         </div>

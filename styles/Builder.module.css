@@ -1,0 +1,77 @@
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editor-tools {
+     width: calc(100% - 2rem);
+     top: 1rem;
+     left: 1rem;
+     min-height: 2rem;
+     backdrop-filter: blur(4rem);
+     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+     display: flex;
+     justify-content: space-between;
+     padding: 1rem 1.5rem;
+     align-items: center;
+     border-radius: 10px;
+     margin-bottom: 4rem;
+}
+
+.editor-tools > h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.run-button {
+    border: none;
+    border-radius: 100px;
+    padding: .5rem 2rem;   
+    background: #f54fd4;  /* fallback for old browsers */
+    color: white;   
+}
+
+.run-button:hover {
+    background: #db31b9;  /* fallback for old browsers */
+}
+
+.edit-button {
+    border: none;
+    border-radius: 100px;
+    padding: .5rem 2rem;   
+    background: #4e4ef3;  /* fallback for old browsers */
+    color: white;
+    margin-right: .7rem;
+}
+
+.edit-button:hover { 
+    background: #2727cf;  /* fallback for old browsers */
+}
+
+.connect-metamask {
+    color: #4e4ef3;
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: .7rem;
+    border: none;
+    border-radius: 100px;
+    padding: .5rem 1.5rem;   
+    border: 2px solid #4e4ef3;  /* fallback for old browsers */
+}
+
+.connect-metamask:hover {
+    color: white;
+    background: #4e4ef3;  /* fallback for old browsers */
+}
+
+.buttons {
+    display: flex;
+}

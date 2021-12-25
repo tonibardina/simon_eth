@@ -54,13 +54,15 @@
     color: transparent;
   }
   
-  .options-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem
+  .options {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-items: center;
   }
   
-  @media (max-width: 400px) {
+  @media (max-width: 700px) {
     .options-grid {
       width: 100%;
       grid-template-columns: repeat(1, minmax(0, 1fr));

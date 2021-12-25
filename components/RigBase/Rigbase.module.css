@@ -1,0 +1,11 @@
+.rigbase {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 2px dashed rgb(233, 233, 233);
+    border-radius: 30px;
+}
+
+.rigbase:hover {
+    background-color: rgb(245, 245, 245);
+}
