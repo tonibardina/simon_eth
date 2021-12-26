@@ -5,7 +5,7 @@ import { setActiveBlock, setRunning } from "../../contexts/Builder/actions";
 import styles from "./Controls.module.css"
 
 const Controls = () => {
-    const { state: { runDuration, sequence }, dispatch } = useContext(BuilderContext)
+    const { state: { runDuration, sequence, isRunning }, dispatch } = useContext(BuilderContext)
     const progressBar = useRef<null | HTMLDivElement>(null)
 
     const runSequence = () => {
@@ -30,7 +30,7 @@ const Controls = () => {
              
             sequenceStep()
 
-        }, runDuration / 8);
+        }, runDuration / sequence.length - 1);
 
         sequenceStep()
     }
@@ -44,10 +44,10 @@ const Controls = () => {
 
     return (
         <div className={styles.controls}>
-            <div onClick={runSequence}>
+            <div onClick={() => !isRunning && runSequence()}>
                 <Image src="/play.svg" width="50" height="50" />
             </div>
-            <div onClick={stopRun}>
+            <div onClick={() => isRunning && stopRun()}>
                 <Image src="/pause.svg" width="27" height="27" />
             </div>
             <div className={styles['bar-container']}>

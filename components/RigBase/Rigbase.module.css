@@ -9,3 +9,11 @@
 .rigbase:hover {
     background-color: rgb(245, 245, 245);
 }
+
+@media (max-width: 700px) {
+    .rigbase {
+      width: 150px;
+      height: 150px;
+    }
+  }
+  

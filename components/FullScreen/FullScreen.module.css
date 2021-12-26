@@ -1,0 +1,26 @@
+.fullscreen {
+    position: fixed;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: white;
+    animation: slide-in .5s linear;
+    top: 0;
+    left: 0;
+    padding: 1rem 2rem 4rem 2rem;
+}
+
+.title {
+   width: 100%;
+   margin-bottom: 2rem;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   border-bottom: 1px solid rgb(235, 235, 235);
+   padding-bottom: 1rem;
+}
+
+@keyframes slide-in {
+    0% {
+        left: 100%;
+    }
+}

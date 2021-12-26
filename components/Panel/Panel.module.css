@@ -1,10 +1,11 @@
 .panel {
     position: absolute;
-    top: 0rem;
-    right: -9rem;
+    bottom: -8rem;
+    left: -1rem;
     margin: 1rem;
     z-index: 50;
     padding: .5rem;
+    width: 100%;
     text-align: left;
     text-decoration: none; 
     backdrop-filter: blur(4rem);

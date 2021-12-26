@@ -4,12 +4,15 @@ import { useContext, useEffect, useState } from 'react'
 import HeadComponent from '../components/Head'
 import Platform from '../components/Platform'
 import { BuilderContext, BuilderProvider } from '../contexts/Builder'
-import { clearSequence, setCreatingSequenceMode, setEditMode } from '../contexts/Builder/actions'
+import { clearSequence, setCreatingSequenceMode, setEditMode, updateBlock } from '../contexts/Builder/actions'
 import styles from '../styles/Builder.module.css'
 import SimonContractJSON from "../artifacts/contracts/Simon.sol/Simon.json"
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import BlocksPanel from '../components/BlocksPanel';
 import Controls from '../components/Controls';
+import OutsideClickHandler from 'react-outside-click-handler';
+import FullScreen from '../components/FullScreen';
+import { getAllBlocks } from '../api';
 
 const random = () => Math.floor(Math.random() * 2000)
 export const SEQUENCE_MAX_LENGTH = 9
@@ -23,7 +26,8 @@ const Builder: NextPage = () => {
     const { state: { editMode, isCreatingSequence, sequence }, dispatch } = useContext(BuilderContext)
     const [currentAccount, setCurrentAccount] = useState("");
     const [contract, setContract] = useState<any>(null);
-    const [user, setUser] = useState<User | null>(null);
+    const [showBlocksList, setShowBlocksList] = useState(false);
+    const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
     const sequenceIsCompleted = sequence.length === SEQUENCE_MAX_LENGTH
 
     const web3 = createAlchemyWeb3(process.env.NEXT_PUBLIC_ALCHEMY_API_URL!);
@@ -42,10 +46,6 @@ const Builder: NextPage = () => {
                 const account = accounts[0];
                 setCurrentAccount(account);
             }
-
-            (window as any).ethereum.on("UserRegistered", (user: User) => {
-                setUser(user)
-              });
         } catch (error) {
             console.log(error);
         }
@@ -90,9 +90,9 @@ const Builder: NextPage = () => {
     const handleSequenceUpdate = () => {
         if (sequenceIsCompleted) {
             clearSequence(dispatch)
-            return 
+            return
         }
-        
+
         setCreatingSequenceMode(dispatch, !isCreatingSequence)
     }
 
@@ -112,18 +112,68 @@ const Builder: NextPage = () => {
             <div style={{ width: 70, height: 70, backgroundColor: "#f54fd4", top: random(), left: random() }} className="random-gradient-circle"></div>
             <div style={{ width: 90, height: 90, backgroundColor: "#4e4ef3", top: random(), left: random() }} className="random-gradient-circle"></div>
 
+            <Platform />
+
             <div className={styles["editor-tools"]}>
                 <h3>Builder</h3>
                 <div className={styles.buttons}>
-                    {currentAccount && user && <div>{user.lvl}</div>}
                     {!currentAccount && <button onClick={connectWallet} className={styles["connect-metamask"]}><Image src="/metamask.png" width="20" height="20" />&nbsp;Connect wallet</button>}
+
                     {editMode && <button onClick={handleSequenceUpdate} className={styles["sequence-button"]}>{sequenceIsCompleted ? "Clear sequence" : isCreatingSequence ? `Blocks left: ${SEQUENCE_MAX_LENGTH - sequence.length}` : "Create sequence"}</button>}
+
                     <button onClick={() => setEditMode(dispatch, !editMode)} className={styles["edit-button"]}>{editMode ? "Editting..." : "Edit"}</button>
+                    <div className={styles["edit-icon"]} onClick={() => setEditMode(dispatch, !editMode)}>
+                        <Image src={editMode ? "/stop-edit.svg" : "/edit.svg"} width="20" height="20"></Image>
+                    </div>
+
+
+                    {editMode && <div onClick={() => setShowMobileMenu(true)} className={styles["menu-icon"]}>
+                        <Image src={"/menu.svg"} width="20" height="20"></Image>
+                        {
+                            showMobileMenu && (
+                                <OutsideClickHandler
+                                    onOutsideClick={() => {
+                                        setShowMobileMenu(false)
+                                    }}
+                                >
+                                    <div className={styles["mobile-menu"]}>
+                                        <p onClick={() => setShowBlocksList(true)}>Blocks</p>
+                                    </div>
+                                </OutsideClickHandler>
+                            )
+                        }
+                    </div>}
                 </div>
             </div>
-            <Platform />
-            <BlocksPanel />
+
+            <div className={styles["blocks-panel"]}>
+                <BlocksPanel />
+            </div>
             {!editMode && <Controls />}
+
+            {
+                showBlocksList && (
+                    <FullScreen onClose={() => setShowBlocksList(false)} title="Blocks">
+                        {
+                            getAllBlocks().map(block => {
+                                const { component: Component } = block
+
+                                return <div key={block.name} className={styles["block-row"]}>
+                                    <p>{block.name}</p>
+                                    <div onClick={() => {
+                                        updateBlock(dispatch, block.id)
+                                        setShowBlocksList(false)
+                                    }} className={styles["component-container"]}>
+                                        <Component inSequenceBlock={false} selected={false} />
+                                    </div>
+                                </div>
+                            })
+                        }
+                    </FullScreen>
+                )
+            }
+
+            {editMode && <button onClick={handleSequenceUpdate} className={styles["mobile-sequence-button"]}>{sequenceIsCompleted ? "Clear sequence" : isCreatingSequence ? `Blocks left: ${SEQUENCE_MAX_LENGTH - sequence.length}` : "Create sequence"}</button>}
         </div>
     )
 }

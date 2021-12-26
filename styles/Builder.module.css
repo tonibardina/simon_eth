@@ -7,9 +7,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .editor-tools {
+    position: fixed;
      width: calc(100% - 2rem);
      top: 1rem;
      left: 1rem;
@@ -74,4 +76,82 @@
 
 .buttons {
     display: flex;
+}
+
+.edit-icon {
+    display: none;
+}
+
+.menu-icon {
+    display: none;
+}
+
+.mobile-menu {
+    position: absolute;
+    margin: 1rem;
+    padding: 1.5rem;
+    right: -1rem;
+    top: 1rem;
+    text-align: left;
+    background-color: white;
+    z-index: 55;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    border-radius: 10px;
+}
+
+.mobile-menu p {
+    margin: 0;
+}
+
+.mobile-sequence-button {
+    position: fixed;
+    bottom: 1rem;
+    display: none;
+    border: none;
+    border-radius: 100px;
+    padding: 1rem 2rem;   
+    background: #f54fd4;  /* fallback for old browsers */
+    color: white;   
+}
+
+.mobile-sequence-button:hover {
+    background: #db31b9;  /* fallback for old browsers */
+}
+
+@media (max-width: 700px) {
+    .edit-icon {
+        display: flex;
+        align-items: center;
+    }
+    .edit-button {
+        display: none;
+    }
+    .sequence-button {
+        display: none;
+    }
+    .blocks-panel {
+        display: none;
+    }
+    .menu-icon {
+        position: relative;
+        margin-left: .6rem;
+        display: flex;
+        align-items: center;
+    }
+    .mobile-sequence-button {
+        display: block;
+    }
+  }
+
+  .component-container {
+    width: 3rem;
+    height: 3rem;
+    margin-left: 2rem;
+}
+
+.block-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }

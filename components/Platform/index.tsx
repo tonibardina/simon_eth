@@ -4,7 +4,7 @@ import Rig from "../Rig";
 import RigBase from "../RigBase";
 import styles from "./Platform.module.css"
 
-const NUMBER_OF_RIGS = 9
+const NUMBER_OF_RIGS = 4
 
 const Platform = () => {
     const { state: { editMode, matrix } } = useContext(BuilderContext)
