@@ -1,0 +1,46 @@
+
+
+.controls {
+    width: calc(100% - 8rem);
+    position: fixed;
+     bottom: 0;
+     left: 0;
+     margin: 1rem 4rem;
+     min-height: 1.5rem;
+     backdrop-filter: blur(4rem);
+     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+     display: flex;
+     justify-content: center;
+     padding: .7rem 1.5rem;
+     align-items: center;
+     border-radius: 100px;
+}
+ 
+.bar-container {
+    position: relative;
+    min-height: 10px;
+    border-radius: 10px;
+    background-color: #ececec;
+    display: flex;
+    flex-grow: 1;
+    margin: 0 1rem;
+}
+
+.bar {
+    position: absolute;
+    min-height: 10px;
+    border-radius: 10px;
+    background-color: #4e4ef3;
+    z-index: 10;
+}
+
+.loading {
+    width: 0%;
+    animation: loading 4s linear; 
+}
+
+@keyframes loading {
+    100% {
+        width: 100%;
+    }
+}

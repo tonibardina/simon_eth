@@ -13,3 +13,25 @@
 .block_active {
     background-color: #ff00cc;
 }
+
+.selected::before {
+    content: '';
+    position: absolute;
+    top: -.37rem;
+    left: -.37rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 1000px;
+    z-index: 50;
+    border: 6px solid yellow;
+}
+
+.in-sequence::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1000px;
+    z-index: 50;
+    background-color: rgba(9, 255, 0, 0.5);
+}

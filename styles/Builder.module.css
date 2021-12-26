@@ -29,7 +29,7 @@
     padding: 0;
 }
 
-.run-button {
+.sequence-button {
     border: none;
     border-radius: 100px;
     padding: .5rem 2rem;   
@@ -37,7 +37,7 @@
     color: white;   
 }
 
-.run-button:hover {
+.sequence-button:hover {
     background: #db31b9;  /* fallback for old browsers */
 }
 
@@ -47,7 +47,7 @@
     padding: .5rem 2rem;   
     background: #4e4ef3;  /* fallback for old browsers */
     color: white;
-    margin-right: .7rem;
+    margin-left: .7rem;
 }
 
 .edit-button:hover { 

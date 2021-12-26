@@ -4,14 +4,15 @@ import { useContext, useEffect, useState } from 'react'
 import HeadComponent from '../components/Head'
 import Platform from '../components/Platform'
 import { BuilderContext, BuilderProvider } from '../contexts/Builder'
-import { setEditMode } from '../contexts/Builder/actions'
+import { clearSequence, setCreatingSequenceMode, setEditMode } from '../contexts/Builder/actions'
 import styles from '../styles/Builder.module.css'
 import SimonContractJSON from "../artifacts/contracts/Simon.sol/Simon.json"
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import BlocksPanel from '../components/BlocksPanel';
+import Controls from '../components/Controls';
 
-const NO_BLOCK_ACTIVE = 10
-const INTERVAL = 400
 const random = () => Math.floor(Math.random() * 2000)
+export const SEQUENCE_MAX_LENGTH = 9
 
 type User = {
     lvl: number;
@@ -19,11 +20,11 @@ type User = {
 }
 
 const Builder: NextPage = () => {
-    const [activeBlockId, setActiveBlockId] = useState(NO_BLOCK_ACTIVE)
-    const { state: { editMode }, dispatch } = useContext(BuilderContext)
+    const { state: { editMode, isCreatingSequence, sequence }, dispatch } = useContext(BuilderContext)
     const [currentAccount, setCurrentAccount] = useState("");
     const [contract, setContract] = useState<any>(null);
     const [user, setUser] = useState<User | null>(null);
+    const sequenceIsCompleted = sequence.length === SEQUENCE_MAX_LENGTH
 
     const web3 = createAlchemyWeb3(process.env.NEXT_PUBLIC_ALCHEMY_API_URL!);
 
@@ -79,29 +80,6 @@ const Builder: NextPage = () => {
                 { from: currentAccount }
             );
             setContract(contract);
-
-            if (!user) {
-                try {
-                    const userFromBlockchain = contract.methods.getUser(currentAccount)
-
-                    if (userFromBlockchain) {
-                        const transactionParameters = {
-                            from: currentAccount,
-                            to: process.env.NEXT_PUBLIC_SIMON_ADDRESS,
-                            data: contract?.methods.registerUser(currentAccount).encodeABI(),
-                        };
-
-                        try {
-                            await (window as any).ethereum.request({
-                                method: "eth_sendTransaction",
-                                params: [transactionParameters],
-                            })
-                        } catch (error) { }
-                    }
-                } catch (e) {
-                    console.log(e)
-                }
-            }
         }
 
         if (!contract && process.env.NEXT_PUBLIC_SIMON_ADDRESS && currentAccount && web3) {
@@ -109,12 +87,13 @@ const Builder: NextPage = () => {
         }
     }, [currentAccount, contract, web3])
 
-    const runCode = () => {
-        let counter = 1;
-        const runInterval = setInterval(() => {
-            setActiveBlockId(counter)
-            counter === 10 ? clearInterval(runInterval) : counter++
-        }, INTERVAL)
+    const handleSequenceUpdate = () => {
+        if (sequenceIsCompleted) {
+            clearSequence(dispatch)
+            return 
+        }
+        
+        setCreatingSequenceMode(dispatch, !isCreatingSequence)
     }
 
     return (
@@ -138,11 +117,13 @@ const Builder: NextPage = () => {
                 <div className={styles.buttons}>
                     {currentAccount && user && <div>{user.lvl}</div>}
                     {!currentAccount && <button onClick={connectWallet} className={styles["connect-metamask"]}><Image src="/metamask.png" width="20" height="20" />&nbsp;Connect wallet</button>}
+                    {editMode && <button onClick={handleSequenceUpdate} className={styles["sequence-button"]}>{sequenceIsCompleted ? "Clear sequence" : isCreatingSequence ? `Blocks left: ${SEQUENCE_MAX_LENGTH - sequence.length}` : "Create sequence"}</button>}
                     <button onClick={() => setEditMode(dispatch, !editMode)} className={styles["edit-button"]}>{editMode ? "Editting..." : "Edit"}</button>
-                    <button onClick={runCode} className={styles["run-button"]}>Run</button>
                 </div>
             </div>
             <Platform />
+            <BlocksPanel />
+            {!editMode && <Controls />}
         </div>
     )
 }
